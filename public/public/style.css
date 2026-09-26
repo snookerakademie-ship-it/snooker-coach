@@ -1,0 +1,143 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #111;
+  color: #fff;
+}
+
+.app {
+  width: min(900px, 94%);
+  margin: 40px auto;
+}
+
+.hero {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  margin-bottom: 28px;
+}
+
+.logo {
+  font-size: 48px;
+}
+
+h1 {
+  margin: 0 0 8px 0;
+  font-size: 38px;
+}
+
+.hero p {
+  margin: 0;
+  color: #ccc;
+}
+
+.quick-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.quick-actions button {
+  background: #1f1f1f;
+  color: #fff;
+  border: 1px solid #444;
+  border-radius: 999px;
+  padding: 10px 16px;
+  cursor: pointer;
+}
+
+.quick-actions button:hover {
+  background: #2c2c2c;
+}
+
+.chat {
+  height: 500px;
+  overflow-y: auto;
+  background: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 15px;
+}
+
+.message {
+  max-width: 78%;
+  padding: 12px 15px;
+  margin-bottom: 12px;
+  border-radius: 14px;
+  white-space: pre-wrap;
+  line-height: 1.5;
+}
+
+.assistant {
+  background: #262626;
+  margin-right: auto;
+}
+
+.user {
+  background: #5d8f00;
+  margin-left: auto;
+}
+
+.input-area {
+  display: flex;
+  gap: 10px;
+}
+
+.input-area input {
+  flex: 1;
+  padding: 14px;
+  border-radius: 10px;
+  border: 1px solid #444;
+  background: #1d1d1d;
+  color: white;
+  font-size: 16px;
+}
+
+.input-area button {
+  padding: 14px 20px;
+  border: 0;
+  border-radius: 10px;
+  background: #86c400;
+  color: #111;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.footer-note {
+  margin-top: 12px;
+  color: #888;
+  font-size: 13px;
+  text-align: center;
+}
+
+@media (max-width: 600px) {
+  .app {
+    margin-top: 20px;
+  }
+
+  .hero {
+    align-items: flex-start;
+  }
+
+  h1 {
+    font-size: 30px;
+  }
+
+  .chat {
+    height: 58vh;
+  }
+
+  .message {
+    max-width: 92%;
+  }
+
+  .input-area {
+    flex-direction: column;
+  }
+}
