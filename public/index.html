@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Snooker Coach</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+
+<body>
+  <main class="app">
+    <section class="hero">
+      <div class="logo">🎱</div>
+      <div>
+        <h1>Snooker Coach</h1>
+        <p>Dein digitaler Assistent für Training, Technik und Zuschauerfragen.</p>
+      </div>
+    </section>
+
+    <section class="quick-actions">
+      <button onclick="askQuick('Gib mir eine Übung für Breakbuilding.')">
+        Breakbuilding
+      </button>
+
+      <button onclick="askQuick('Hilf mir beim Positionsspiel.')">
+        Positionsspiel
+      </button>
+
+      <button onclick="askQuick('Erkläre mir eine typische Safety-Situation.')">
+        Safety
+      </button>
+
+      <button onclick="askQuick('Erkläre mir eine Snookerregel für Zuschauer.')">
+        Regeln verstehen
+      </button>
+    </section>
+
+    <section id="chat" class="chat">
+      <div class="message assistant">
+        Hallo! Was möchtest du beim Snooker verbessern oder verstehen?
+      </div>
+    </section>
+
+    <form id="chatForm" class="input-area">
+      <input
+        id="messageInput"
+        type="text"
+        placeholder="Zum Beispiel: Ich habe 45 Minuten Zeit und möchte mein Positionsspiel verbessern."
+        autocomplete="off"
+      />
+
+      <button type="submit">Senden</button>
+    </form>
+
+    <p class="footer-note">
+      KI-gestützter Snooker-Assistent von snookertraining.de
+    </p>
+  </main>
+
+  <script>
+    const chat = document.getElementById("chat");
+    const form = document.getElementById("chatForm");
+    const input = document.getElementById("messageInput");
+
+    function addMessage(text, type) {
+      const message = document.createElement("div");
+      message.className = "message " + type;
+      message.textContent = text;
+      chat.appendChild(message);
+      chat.scrollTop = chat.scrollHeight;
+    }
+
+    async function sendMessage(text) {
+      addMessage(text, "user");
+
+      const loading = document.createElement("div");
+      loading.className = "message assistant";
+      loading.textContent = "Ich denke kurz nach …";
+      chat.appendChild(loading);
+      chat.scrollTop = chat.scrollHeight;
+
+      try {
+        const response = await fetch("/api/chat", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            message: text
+          })
+        });
+
+        const data = await response.json();
+
+        loading.remove();
+
+        if (!response.ok) {
+          addMessage(
+            data.error || "Leider ist gerade ein Fehler aufgetreten.",
+            "assistant"
+          );
+          return;
+        }
+
+        addMessage(data.reply, "assistant");
+
+      } catch (error) {
+        loading.remove();
+        addMessage(
+          "Der Snooker Coach ist gerade nicht erreichbar.",
+          "assistant"
+        );
+      }
+    }
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      const text = input.value.trim();
+
+      if (!text) return;
+
+      input.value = "";
+      await sendMessage(text);
+    });
+
+    function askQuick(text) {
+      sendMessage(text);
+    }
+  </script>
+</body>
+</html>
