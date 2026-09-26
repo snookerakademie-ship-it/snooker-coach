@@ -1,0 +1,14 @@
+{
+  "name": "snooker-coach",
+  "version": "1.0.0",
+  "description": "Digitaler Snooker Coach für snookertraining.de",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "openai": "^6.0.0"
+  }
+}
